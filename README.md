@@ -1,48 +1,88 @@
-# Bibek Ghimire | Cybersecurity portfolio v7.0
+# Bibek Ghimire | Cybersecurity Portfolio v7.0
 
-An evidence-led Next.js portfolio expanded from Bibek's existing v6.2 website. The application retains the original interactive Three.js network and grounded portfolio assistant, while adding five additional case studies based on provided screenshots and lab files.
+**An evidence-led portfolio of cybersecurity, digital forensics, network defense, and systems administration work.**
 
-## Local development
+**Live website:** [bibek-security-portfolio.vercel.app](https://bibek-security-portfolio.vercel.app)  
+**GitHub:** [@Beebek-G](https://github.com/Beebek-G)  
+**LinkedIn:** [bibekghimire33](https://www.linkedin.com/in/bibekghimire33/)
 
-Requirements: Node.js 20+ and npm.
+I am studying Computer Science and Information Security at John Jay College of Criminal Justice, CUNY, after completing an A.A.S. in Cybersecurity at LaGuardia Community College. This Next.js portfolio brings together documented academic investigations, practical lab exercises, and a collegiate Capture the Flag (CTF) case study.
+
+## Featured work
+
+| Project | Focus | Case study |
+| --- | --- | --- |
+| Digital Forensics Investigation Series | Ten academic investigations covering evidence handling, recovery, incident response, and disk, network, mobile, and memory forensics | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/digital-forensics) |
+| Kean University CTF | Web security and digital forensics challenges, including authentication cookies, SQL injection, ZIP password recovery, and image metadata | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/kean-ctf) |
+| pfSense Network Lab | Hyper-V network segmentation, interface configuration, firewall rules, and connectivity testing | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/network-lab) |
+| Tailscale + pfSense | VPN connectivity and subnet-routing lab documentation | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/tailscale-pfsense) |
+| Linux Firewall & Services | Ubuntu iptables, SSH, Apache, Netcat, and traffic validation | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/linux-firewall) |
+| Bash Job Database | Menu-driven Bash/AWK coursework project with search, duplicate detection, and record management | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/bash-job-database) |
+| Fedora FTP Service | vsftpd configuration, local authentication, firewalld/SELinux settings, and transfer tests | [Explore](https://bibek-security-portfolio.vercel.app/case-studies/ftp-service) |
+
+**Evidence note:** These are educational labs and exercises, not claims of production security deployments. In the Kean CTF case study, four challenge completions are documented from personal notes; two are directly visible as completed in the available screenshots. No competition rank is claimed. Some cases are supported by screenshots and written observations rather than independently published source-code repositories.
+
+## Website features
+
+- Interactive Three.js network visualization using React Three Fiber.
+- **Ask the Network:** a server-side portfolio assistant that answers from curated public portfolio material; it does not call an external AI model.
+- Case studies with methods, observations, limitations, and selected evidence.
+- Responsive layouts, downloadable resume and project portfolio PDFs, and a [site security overview](https://bibek-security-portfolio.vercel.app/security).
+- Contact flow with a prefilled email fallback. Automated email notifications are **not enabled** unless Resend is configured.
+
+## Tech stack
+
+- **Framework:** Next.js 15 App Router, React 19, TypeScript
+- **3D:** Three.js and React Three Fiber
+- **Hosting:** Vercel, connected to this GitHub repository's `main` branch
+- **Optional email service:** Resend (server-side only)
+
+## Run locally
+
+Requires a compatible Node.js installation and npm.
 
 ```bash
-npm install
+git clone https://github.com/Beebek-G/bibek-security-portfolio.git
+cd bibek-security-portfolio
+npm ci
 npm run dev
-# open http://localhost:3000
 ```
 
-Build: `npm run build` · Start: `npm run start`. A lockfile is not supplied; commit a generated lockfile when dependencies are installed. `next lint` is not available in Next.js 15; validate with `npx tsc --noEmit` and `npm run build`.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Key pages
+Check types and build the production application:
 
-- `/` - project-led homepage and portfolio assistant
-- `/case-studies/digital-forensics` - original in-depth ten-lab forensics case
-- `/case-studies/network-lab` - Hyper-V / pfSense routing and segmentation
-- `/case-studies/tailscale-pfsense` - Tailscale subnet routing
-- `/case-studies/linux-firewall` - SSH, Apache and iptables testing
-- `/case-studies/bash-job-database` - Bash/AWK flat-file CRUD project
-- `/case-studies/ftp-service` - Fedora vsftpd administration
-- `/security` - site implementation, privacy and hardening roadmap
+```bash
+npm run typecheck
+npm run build
+```
 
-## Content and evidence policy
+The repository includes `package-lock.json` for reproducible dependency installation.
 
-Each project is explicitly labeled as an educational lab unless there is independent evidence for a production deployment. Screenshots are selectively cropped; the Tailscale authentication-key screen and job-database personal records are excluded. No unpublished source repositories are claimed. Lab capture materials remain local; `public/evidence` contains only reviewed subsets.
+## Environment variables
 
-**IMPORTANT:** A Tailscale auth key was visible in material originally submitted. Rotate/revoke that key and check audit logs before publishing any original screenshot. Never reuse or publish the hard-coded classroom account passwords shown in Bash scripts. Review all posted assets for identifiers before deployment.
+See [`.env.example`](.env.example) for optional configuration:
 
-## Confirm before public deployment
+| Variable | Purpose |
+| --- | --- |
+| `RESEND_API_KEY` | Optional server-side email API key. If absent, the contact flow offers a prefilled `mailto:` link. |
+| `CONTACT_TO` | Destination email for contact messages or the fallback link. |
+| `NEXT_PUBLIC_SITE_URL` | Optional site URL; use the actual deployment URL in production rather than localhost. |
 
-1. Verify current John Jay enrollment wording: resume says *transferring Fall 2026* while v6.2 said *currently enrolled*. The v7 text conservatively labels this a transfer pathway.
-2. Verify preferred contact address. v7 uses `bibekghimire.contact@gmail.com` as shown on the supplied resume (v6.2 used a separate contact address). Optional email target can be set with `CONTACT_TO`.
-3. Replace `public/Bibek_Ghimire_Resume.pdf` if academic status/contact details have changed.
-4. Confirm that all evidence descriptions faithfully match original source files; do not upload unredacted screenshots.
-5. Add rate limiting, CSP, dependency scans and verified email-domain configuration before production rollout.
+Do not commit API keys, private `.env` files, or unredacted private lab artifacts.
 
-## Contact endpoint
+## Security and evidence boundaries
 
-Without `RESEND_API_KEY`, contact intent falls back to a prefilled mailto link. Server-side notification requires environment variables. Never put server keys in client code or commit `.env` files. Use `RESEND_API_KEY`, `CONTACT_TO`, and a verified sender domain where appropriate.
+The site includes server-side input checks, an anti-spam honeypot in the contact flow, HTML escaping for email content, and several response security headers. Additional hardening—such as endpoint rate limiting, a Content Security Policy, and automated security checks—remains future work; this portfolio should not be treated as a fully hardened production security service.
 
-## Evidence registry
+Published screenshots are selected subsets of classroom or competition material. Sensitive screenshots and raw personal records are intentionally excluded. See [Evidence Index](EVIDENCE_INDEX.md) and [Release Checklist](RELEASE_CHECKLIST.md) for source notes, limitations, and remaining review items.
 
-See `EVIDENCE_INDEX.md` and `RELEASE_CHECKLIST.md` for source references, caveats, and publishing review.
+## Contact
+
+- **Portfolio:** [bibek-security-portfolio.vercel.app](https://bibek-security-portfolio.vercel.app)
+- **LinkedIn:** [linkedin.com/in/bibekghimire33](https://www.linkedin.com/in/bibekghimire33/)
+- **Email:** [bibekghimire.contact@gmail.com](mailto:bibekghimire.contact@gmail.com)
+
+---
+
+Built and maintained by Bibek Ghimire.
